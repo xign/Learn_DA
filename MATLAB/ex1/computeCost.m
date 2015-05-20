@@ -31,14 +31,6 @@ J = 0;
 %end
 
 
-%y = y/24.1470;
-%X(:, 2) = X(:, 2)/22.2030;
-
-
-%hr = sum(X * theta);
-%for i = 1:m
-%    J = J + 1 / (2*m) * (y(i) - hr)^2;
-%end
 
 hr = X * theta;
 J = 1 / (2*m) * sum((y - hr).^2);
