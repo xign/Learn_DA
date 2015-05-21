@@ -10,6 +10,9 @@ g = zeros(size(z));
 %               vector or scalar).
 
 
+%z = z * ones(size(z))' * eye(length(z),length(z));
+g = (1 + exp(-z)).^(-1);
+
 
 
 

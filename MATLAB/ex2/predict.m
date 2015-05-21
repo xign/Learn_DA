@@ -15,8 +15,9 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
-
-
+Z = X * theta;
+h = sigmoid(Z);
+p(h(:)>=0.5) = 1;
 
 
 
