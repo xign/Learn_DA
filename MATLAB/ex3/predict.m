@@ -21,11 +21,11 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
-
-
-
-
-
+X = [ones(m, 1) X];
+q = X * Theta1';
+q = sigmoid(q);
+q = [ones(size(q, 1), 1), q];
+p = predictOneVsAll(Theta2', q);
 
 
 
