@@ -63,19 +63,48 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+a1 = [ones(m, 1), X];
+
+Z2 = a1 * Theta1';
+a2 = sigmoid(Z2);
+n = size(a2, 1);
+a2 = [ones(n, 1), a2];
+
+Z3 = a2 * Theta2';
+a3 = sigmoid(Z3);
+
+y3 = zeros(size(y, 1), num_labels);
+for i = 1 : m;
+    y3(i, y(i)) = 1;
+end;
+
+J = 1/m * sum(sum(-y3 .* log(a3) - (1 - y3) .* log(1 - a3)));
 
 
 
+Theta11 = reshape(Theta1, [size(Theta1,1)*size(Theta1,2), 1]);
+Theta22 = reshape(Theta2, [size(Theta2,1)*size(Theta2,2), 1]);
+Theta = [Theta11 ; Theta22];
+J = J + lambda * 1 / (2*m) * sum(Theta.^2);
 
 
+Delta1 = zeros(size(Theta1));
+Delta2 = zeros(size(Theta2));
 
 
+Theta2 = Theta2(: , 2:end);
+for i = 1 : m;
+kedou3 = a3(i,:) - y3(i,:);
+kedou2 = kedou3 * Theta2 .* sigmoidGradient(Z2(i,:));
+Delta2 = Delta2 + kedou3' * a2(i, :);
+Delta1 = Delta1 + kedou2' * a1(i, :);
+end;
 
+Theta2_grad = Delta2/m;
+Theta1_grad = Delta1/m;
 
-
-
-
-
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + 1/m * lambda * Theta2;
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + 1/m * lambda * Theta1(:, 2:end);
 
 
 
